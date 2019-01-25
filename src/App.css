@@ -1,10 +1,6 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  box-sizing: border-box;
 }
 
 .App-header {
@@ -22,11 +18,84 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.link {
+  padding: 10px;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+  text-align: left;
+  background-color: #c5c8cc;
+  height: fill-available; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  text-align: left;
+  width: 75%;
+}
+
+h1 {
+  display: inline;
+  margin-right: 20px;
+  font-size: 40px;
+}
+
+#new-room-input {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#form-new-room {
+  text-align: center;
+}
+
+p.room-list::first-letter {
+  text-transform: uppercase;
+}
+
+.room-title::first-letter {
+  text-transform: uppercase;
+}
+
+.room-title {
+  margin-left: 40%;
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.sent-at{
+  text-align: right;
+}
+
+.sent-at {
+  text-align: right;
+}
+
+.message {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 10px;
+  padding-left: 50px;
+  margin-left: 35%;
+}
+
+.message:nth-child(2n) {
+  background-color: transparent;
+}
+
+.message-time {
+  float: right;
+  color: #aaa;
+}
+
+h4 {
+  display: inline;
 }
