@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 class User extends Component {
-  constructor(props) {
-    super(props);
 
-  }
 
   componentDidMount() {
     this.props.firebase.auth().onAuthStateChanged( user => {
@@ -16,8 +13,8 @@ class User extends Component {
   render() {
     return (
       <div>
-        <button onClick={ this.props.handleSignInClick } >Sign In</button>
-        <button onClick={ this.props.handleSignOutClick } >Sign Out</button>
+        <button className="signInButton"onClick={ this.props.handleSignInClick } >Sign In</button>
+        <button className="signInButton"onClick={ this.props.handleSignOutClick } >Sign Out</button>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import * as firebase from 'firebase';
 import './App.css';
 import User from './components/User';
@@ -25,12 +25,8 @@ class App extends Component {
       rooms: [],
       newRoomName: "",
       showModal: false,
-      user: null,
+      user: { displayName: "Guest" },
       loggedIn: false,
-      currentRoom: {
-        name: "",
-        roomId: "",
-      }
     }
 
     this.roomsRef = firebase.database().ref('rooms');
@@ -73,14 +69,6 @@ class App extends Component {
     this.setState({ newRoomName: e.target.value});
   }
 
-  handleRoomClick(room) {
-    this.setState({ currentRoom: {
-      name: room.name,
-      roomId: room.key
-      }
-    })
-  }
-
   handleSignInClick() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup( provider );
@@ -88,11 +76,13 @@ class App extends Component {
 
   handleSignOutClick() {
     firebase.auth().signOut();
-    this.setState({ loggedIn: false })
+    this.setState({
+      user: { displayName: "Guest" } ,
+      loggedIn: false })
   }
 
   setUser(user) {
-    if(user != null) {
+    if(user !== null) {
       this.setState({
         user: user,
         loggedIn: true
@@ -101,7 +91,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.loggedIn)
     return (
       <div className="App">
         <header>
@@ -115,7 +104,6 @@ class App extends Component {
           <Route path='/room-list' render={() =>
               <RoomList
                 firebase={ firebase }
-                handleRoomClick={(room) => this.handleRoomClick(room)}
                 handleChange={(e) => this.handleChange(e)}
                 handleSubmit={(e) => this.handleSubmit(e)}
                 openModal={this.openModal}
@@ -123,7 +111,7 @@ class App extends Component {
                 showModal={this.state.showModal}
                 newRoomName={ this.state.newRoomName }
                 rooms={this.state.rooms}
-                currentRoom={this.state.currentRoom}
+                user={this.state.user}
               />
             }
           />
