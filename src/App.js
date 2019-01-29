@@ -5,6 +5,8 @@ import './App.css';
 import User from './components/User';
 import RoomList from './components/RoomList';
 import Landing from './components/Landing';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons';
 
   // Initialize Firebase
   var config = {
@@ -22,51 +24,12 @@ class App extends Component {
     super(props);
 
     this.state = {
-      rooms: [],
-      newRoomName: "",
-      showModal: false,
       user: { displayName: "Guest" },
       loggedIn: false,
     }
 
-    this.roomsRef = firebase.database().ref('rooms');
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.handleSignInClick = this.handleSignInClick.bind(this);
     this.handleSignOutClick = this.handleSignOutClick.bind(this);
-  }
-
-  componentDidMount() {
-    this.roomsRef.on('child_added', snapshot => {
-      const room = snapshot.val();
-      room.key = snapshot.key;
-      this.setState({ rooms: this.state.rooms.concat( room ) });
-    });
-  }
-
-  componentWillUnmount() {
-    this.roomsRef.off();
-  }
-
-  openModal() {
-    this.setState({ showModal: true});
-  }
-
-  closeModal() {
-    this.setState({showModal: false});
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.roomsRef.push({
-      name: this.state.newRoomName
-    });
-    this.setState({showModal: false});
-  }
-
-  handleChange(e) {
-    e.preventDefault();
-    this.setState({ newRoomName: e.target.value});
   }
 
   handleSignInClick() {
@@ -104,13 +67,6 @@ class App extends Component {
           <Route path='/room-list' render={() =>
               <RoomList
                 firebase={ firebase }
-                handleChange={(e) => this.handleChange(e)}
-                handleSubmit={(e) => this.handleSubmit(e)}
-                openModal={this.openModal}
-                closeModal={this.closeModal}
-                showModal={this.state.showModal}
-                newRoomName={ this.state.newRoomName }
-                rooms={this.state.rooms}
                 user={this.state.user}
               />
             }
@@ -130,4 +86,5 @@ class App extends Component {
   }
 }
 
+library.add( faTrashAlt, faPen );
 export default App;

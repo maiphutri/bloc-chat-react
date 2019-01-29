@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class MessageList extends Component {
   constructor(props) {
@@ -14,11 +15,13 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
-    this.messagesRef.orderByChild('sentAt').on('child_added', snapshot => {
-      const message = snapshot.val();
-      message.key = snapshot.key;
-      this.setState({ messages: this.state.messages.concat( message ) });
-    });
+    if (this.messagesRef !== null) {
+      this.messagesRef.orderByChild('sentAt').on('child_added', snapshot => {
+        const message = snapshot.val();
+        message.key = snapshot.key;
+        this.setState({ messages: this.state.messages.concat( message ) });
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -42,6 +45,26 @@ class MessageList extends Component {
     this.setState({ content: e.target.value })
   }
 
+  handleMessageDelete(message) {
+    if (window.confirm("Delete your message ?")) {
+      this.messagesRef.child(message.key).remove();
+      const updateMessage = this.state.messages.filter( item => item !== message);
+      this.setState({messages: updateMessage});
+    }
+  }
+
+  editMessage(message, index) {
+    const editedMessage = window.prompt("Edit the message: ");
+    if(editedMessage != null) {
+      this.messagesRef.child(message.key).update({
+        content: editedMessage
+      })
+      let newMessageArray = [...this.state.messages];
+      newMessageArray[index].content= editedMessage;
+      this.setState({ messages: newMessageArray});
+    }
+  }
+
   render() {
     return (
       <section className="column right">
@@ -57,6 +80,18 @@ class MessageList extends Component {
                              "message user-message" : "message"
                   }
                 >
+                    <span className='trash-message'>
+                      <FontAwesomeIcon
+                        icon='trash-alt'
+                        onClick={() => this.handleMessageDelete(message)}
+                      />
+                    </span>
+                    <span className='pen-message' >
+                      <FontAwesomeIcon
+                        icon='pen'
+                        onClick={() => this.editMessage(message, index)}
+                      />
+                    </span>
                     <h6>{message.username}</h6>
                     <span className='message-time'>{message.sentAt}</span>
                     <p>{message.content}</p>
@@ -64,7 +99,7 @@ class MessageList extends Component {
               )
           )
         }
-        <div className={this.props.currentRoom.name !== null  ? "type-box" : "type-box hide"} >
+        <div className={this.props.currentRoom.name != null  ? "type-box" : "type-box hide"} >
           <form id='form-message' onSubmit={(e) => this.handleMessageSubmit(e)} >
             <input
               id='write-message'

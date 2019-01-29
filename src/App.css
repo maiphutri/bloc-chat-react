@@ -58,18 +58,23 @@ h1 {
 #form-new-room {
   text-align: center;
 }
-
-p.room-list {
-  margin-top: 15px;
-  margin-bottom: 0;
-}
-
-p.room-list::first-letter {
-  text-transform: uppercase;
-}
-
 .room-title::first-letter {
   text-transform: uppercase;
+}
+.rooms-column::first-letter {
+  text-transform: uppercase;
+}
+
+.rooms-column:hover {
+  color: white;
+}
+
+.rooms-column {
+  width: 85%;
+  max-width: 100%;
+  margin-top: 15px;
+  margin-bottom: 0;
+  display: inline-block;
 }
 
 .room-title {
@@ -136,4 +141,23 @@ h4 {
 
 .signInButton {
   margin: 10px;
+}
+
+.trash-message {
+  float: right;
+}
+
+.pen-message {
+  float: right;
+  margin-right: 10px;
+}
+
+.trash {
+  margin-left: 10px;
+  margin-top: 15px;
+  color: red;
+  opacity: 0.8;
+}
+.pen {
+  opacity: 0.8;
 }
