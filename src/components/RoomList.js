@@ -76,7 +76,7 @@ class RoomList extends Component {
   }
 
   editRoomName(room, index) {
-    const newName = window.prompt("Enter new room name:");
+    const newName = window.prompt("Enter new room name:", room.name);
     if(newName != null) {
       this.roomsRef.child(room.key).set({
         name: newName
@@ -101,7 +101,7 @@ class RoomList extends Component {
         width                 : '300px'
       }
     };
-    console.log(this.state.currentRoom.roomId)
+    
     return (
       <main className='room-list'>
         <div>
@@ -124,7 +124,7 @@ class RoomList extends Component {
                 id="new-room-input"
                 maxLength="25"
               />
-              <input type='button' value='Cancle' onClick={ this.closeModal } />
+              <input type='button' value='Cancel' onClick={ this.closeModal } />
               <input type='submit' value="Create" />
             </form>
             </Modal>

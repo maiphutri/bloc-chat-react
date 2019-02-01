@@ -54,7 +54,7 @@ class MessageList extends Component {
   }
 
   editMessage(message, index) {
-    const editedMessage = window.prompt("Edit the message: ");
+    const editedMessage = window.prompt("Edit the message: ", message.content);
     if(editedMessage != null) {
       this.messagesRef.child(message.key).update({
         content: editedMessage

@@ -25,7 +25,7 @@ class App extends Component {
 
     this.state = {
       user: { displayName: "Guest" },
-      loggedIn: false,
+      isLogIn: false,
     }
 
     this.handleSignInClick = this.handleSignInClick.bind(this);
@@ -41,14 +41,14 @@ class App extends Component {
     firebase.auth().signOut();
     this.setState({
       user: { displayName: "Guest" } ,
-      loggedIn: false })
+      isLogIn: false })
   }
 
   setUser(user) {
     if(user !== null) {
       this.setState({
         user: user,
-        loggedIn: true
+        isLogIn: true
       });
     }
   }
@@ -57,10 +57,9 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <Link className='link' to="/" >Landing</Link>
+          <Link className='link' to="/" >Home</Link>
           <Link className='link' to="/room-list" >Room List</Link>
-          <Link className='link' to='/user' >Sign In</Link>
-          <span>{this.state.loggedIn ? this.state.user.displayName : "Guest"}</span>
+          <Link className='link' to='/user' >{this.state.isLogIn ? this.state.user.displayName : "Guest"}</Link>
         </header>
         <main>
           <Route exact path='/' component={ Landing } />
